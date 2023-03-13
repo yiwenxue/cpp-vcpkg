@@ -1,10 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 
-set(CMAKE_CXX_STANDARD 20 CACHE STRING "")
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_C_COMPILER clang)
-set(CMAKE_CXX_COMILER clang++)
+# set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(${CMAKE_SOURCE_DIR}/cmake/vcpkg_bootstrap.cmake)
 x_vcpkg_bootstrap()
@@ -21,6 +19,7 @@ project(HelloWorld
   LANGUAGES CXX)
 
 find_package(unifex CONFIG REQUIRED)
+add_library(std::coroutines INTERFACE IMPORTED)
 find_package(imgui CONFIG REQUIRED)
 
 set (Boost_NO_WARN_NEW_VERSIONS 1)
