@@ -9,16 +9,15 @@
 #include <chrono>
 
 using namespace std::chrono_literals;
+using namespace unifex;
 
 int main() {
-
-  using namespace unifex;
   timed_single_thread_context context;
 
   auto scheduler = context.get_scheduler();
 
   auto task = schedule_after(scheduler, 10ms) |
-              then([]() { std::cout << "Hello, World!" << std::endl; });
+              then([&]() { std::cout << "Hello, World!" << std::endl; });
 
   sync_wait(std::move(task));
 
