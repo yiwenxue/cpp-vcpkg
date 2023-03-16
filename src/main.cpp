@@ -6,6 +6,8 @@
 #include <unifex/then.hpp>
 #include <unifex/timed_single_thread_context.hpp>
 
+#include <coroutine>
+
 #include <chrono>
 
 using namespace std::chrono_literals;

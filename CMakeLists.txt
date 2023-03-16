@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.23.0)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -34,6 +34,29 @@ target_include_directories(HelloWorld
 )
 
 target_link_libraries(HelloWorld
+  PRIVATE
+  # boost graph
+    Boost::graph
+    ${Boost_LIBRARIES}
+    uuid
+  #libunifex
+    unifex::unifex
+    imgui::imgui
+)
+
+add_executable(imgui_demo
+src/imgui_demo.cpp
+src/ui_overlay.cpp
+src/ui_overlay.hpp
+)
+
+target_include_directories(imgui_demo
+  PRIVATE
+    ${CMAKE_SOURCE_DIR}/src
+    ${Boost_INCLUDE_DIRS}
+)
+
+target_link_libraries(imgui_demo
   PRIVATE
   # boost graph
     Boost::graph

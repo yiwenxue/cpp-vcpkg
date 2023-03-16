@@ -10,7 +10,14 @@
             ]
         },
         "boost-graph",
-        "imgui",
+        "boost-fusion",
+        {
+            "name": "imgui",
+            "features": [
+                "vulkan-binding",
+                "glfw-binding"
+            ]
+        },
         "glm",
         "vulkan-memory-allocator",
         "vulkan-headers",
