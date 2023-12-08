@@ -1,27 +1,40 @@
+#include <algorithm>
+#include <exception>
 #include <iostream>
 
-#include <unifex/just.hpp>
-#include <unifex/scheduler_concepts.hpp>
-#include <unifex/sync_wait.hpp>
-#include <unifex/then.hpp>
-#include <unifex/timed_single_thread_context.hpp>
+#include <exec/single_thread_context.hpp>
+#include <exec/when_any.hpp>
+#include <stdexec/execution.hpp>
+#include <tbbexec/tbb_thread_pool.hpp>
 
-#include <coroutine>
+#include "application.h"
+#include "widget.h"
 
-#include <chrono>
+int main(int, char **) {
+    exec::single_thread_context ctx;
 
-using namespace std::chrono_literals;
-using namespace unifex;
+    auto app = Application();
 
-int main() {
-  timed_single_thread_context context;
+    app.init();
 
-  auto scheduler = context.get_scheduler();
+    auto root = std::make_unique<ApplicationWindow>("root", &app);
+    root->set_title("Hello World");
 
-  auto task = schedule_after(scheduler, 10ms) |
-              then([&]() { std::cout << "Hello, World!" << std::endl; });
+    app.set_root(std::move(root));
 
-  sync_wait(std::move(task));
+    auto label = std::make_unique<Label>("label");
 
-  return 0;
+    label->set_text("Hello World");
+    label->set_border(1.0f);
+
+    dynamic_cast<ApplicationWindow *>(app.get_root())->set_widget(std::move(label));
+
+    while (!app.should_close()) {
+        app.poll_events();
+        app.frame_move();
+    }
+
+    app.clean();
+
+    return 0;
 }

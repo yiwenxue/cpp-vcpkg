@@ -3,6 +3,16 @@
     "default-registry": {
         "kind": "git",
         "repository": "https://github.com/Microsoft/vcpkg",
-        "baseline": "a7b6122f6b6504d16d96117336a0562693579933"
-    }
+        "baseline": "fba81a6a545a66ef3de3a2d36c355f687f72a6b4"
+    },
+    "registries": [
+        {
+            "kind": "git",
+            "repository": "https://github.com/yiwenxue/vcpkg-registry.git",
+            "packages": [
+                "stdexec"
+            ],
+            "baseline": "c176391cdabb1063ce3ac26477e50a4424603921"
+        }
+    ]
 }

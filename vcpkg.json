@@ -1,16 +1,9 @@
 {
-    "name": "tracer",
+    "name": "helloworld",
     "version-string": "0.00.00",
     "port-version": 0,
     "dependencies": [
-        {
-            "name": "libunifex",
-            "features": [
-                "coroutines"
-            ]
-        },
         "boost-graph",
-        "boost-fusion",
         {
             "name": "imgui",
             "features": [
@@ -18,9 +11,9 @@
                 "glfw-binding"
             ]
         },
-        "glm",
-        "vulkan-memory-allocator",
         "vulkan-headers",
-        "volk"
+        "tbb",
+        "stdexec",
+        "rxcpp"
     ]
 }
