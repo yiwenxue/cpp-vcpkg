@@ -135,8 +135,15 @@ void Application::frame_move() {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
+    // resize imgui io size
+    int w, h;
+    glfwGetFramebufferSize(window, &w, &h);
+    ImGuiIO &io      = ImGui::GetIO();
+    io.DisplaySize.x = static_cast<float>(w);
+    io.DisplaySize.y = static_cast<float>(h);
+
     if (root) {
-        root->render();
+        root->render({0.f, 0.f}, io.DisplaySize);
     }
 
     // Rendering

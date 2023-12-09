@@ -27,7 +27,19 @@ int main(int, char **) {
     label->set_text("Hello World");
     label->set_border(1.0f);
 
-    dynamic_cast<ApplicationWindow *>(app.get_root())->set_widget(std::move(label));
+    auto box = std::make_unique<Boxes>("box");
+
+    box->set_capacity(2);
+
+    box->set_widget(0, std::move(label));
+
+    auto button = std::make_unique<Button>("button");
+
+    button->set_text("Click Me");
+
+    box->set_widget(1, std::move(button));
+
+    dynamic_cast<ApplicationWindow *>(app.get_root())->set_widget(std::move(box));
 
     while (!app.should_close()) {
         app.poll_events();
