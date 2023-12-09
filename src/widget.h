@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <imgui.h>
 #include <memory>
 #include <vector>
@@ -19,29 +20,6 @@ public:
 
 protected:
     std::string name;
-};
-
-class Layout {
-    enum class Alignment {
-        Start, // top or left
-        End,   // bottom or right
-        Center
-    };
-    enum class SizePolicy {
-        Fixed,     // use the size hint
-        Expanding, // use the size hint, but allow expansion
-        Auto,      // minimum size
-    };
-
-public:
-    Layout()          = default;
-    virtual ~Layout() = default;
-
-protected:
-    Alignment  horizontal_alignment{Alignment::Start};
-    Alignment  vertical_alignment{Alignment::End};
-    SizePolicy horizontal_size_policy{SizePolicy::Fixed};
-    SizePolicy vertical_size_policy{SizePolicy::Fixed};
 };
 
 class Boxes : public Widget {
@@ -247,6 +225,11 @@ public:
 
     virtual void render() override {
         ImGui::PushID(this->name.c_str());
+        if (ImGui::Button(this->text.c_str())) {
+            if (this->callback) {
+                this->callback();
+            }
+        }
         ImGui::PopID();
     }
 
@@ -254,6 +237,12 @@ public:
         this->text = std::move(text);
     }
 
+    void set_callback(std::function<void()> callback) {
+        this->callback = callback;
+    }
+
 protected:
     std::string text;
+
+    std::function<void()> callback;
 };
