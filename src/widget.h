@@ -246,3 +246,27 @@ protected:
 
     std::function<void()> callback;
 };
+
+class ProgressBar : public Widget {
+public:
+    ProgressBar(const std::string &name) : Widget(name) {
+    }
+    virtual ~ProgressBar() = default;
+
+    virtual void render() override {
+        ImGui::PushID(this->name.c_str());
+        ImGui::ProgressBar(this->progress);
+        ImGui::PopID();
+    }
+
+    void set_progress(float progress) noexcept {
+        this->progress = progress;
+    }
+
+    float get_progress() noexcept {
+        return this->progress;
+    }
+
+protected:
+    float progress{0.0f};
+};
